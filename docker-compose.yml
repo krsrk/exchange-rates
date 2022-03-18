@@ -1,0 +1,36 @@
+version: '3.7'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: api_cj
+    container_name: api_cj
+    working_dir: /code
+    tty: true
+    volumes:
+      - ./src/api:/code
+    ports:
+      - "8899:8889"
+    networks:
+      - cj_network
+
+  db:
+    image: mariadb:10.5.9-focal
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: stock
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    ports:
+      - "8891:3306"
+    volumes:
+      - ./data/mariadb:/docker-entrypoint-initdb.d
+    networks:
+      - cj_network
+
+networks:
+  cj_network:
+    driver: bridge
