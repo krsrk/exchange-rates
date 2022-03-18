@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from jwt_gen.jwtcreator import JwtCreator
 from orm.peewee import OrmEngine
-from models import User
+from models import User, ExchangeRate
 from repositories import UserRepository
 
 app = FastAPI()
@@ -24,7 +24,7 @@ def startup():
     if OrmEngine().is_connection_closed():
         OrmEngine().connect()
 
-    OrmEngine().migrate(User)
+    OrmEngine().migrate([User, ExchangeRate])
 
 
 @app.on_event('shutdown')

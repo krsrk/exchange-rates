@@ -29,4 +29,4 @@ class OrmEngine:
         return self.engine.close()
 
     def migrate(self, model):
-        return self.engine.create_tables([model])
+        return self.engine.create_tables(model)
