@@ -1,12 +1,12 @@
 # exchange-rates Repo
 Exchange rates values in USD-MXN fixes
 
-### Requirements
+## Requirements
 
 - Docker
 - Docker Compose
 
-### Instalation
+## Instalation
 
 1.- Clonning the repo: 
 
@@ -33,7 +33,7 @@ $ docker-compose up -d
 ``` 
 
 
-### Backend
+## Backend
 
 5.- Deploying the web server:
 
@@ -43,14 +43,14 @@ $ docker-compose exec api uvicorn main:app --reload --port 8889 --host 0.0.0.0
 
 The option **--reload** reloads the server when any changes in the code base is saved. This option is only used in Development.
 
-#### Database
+## Database
 If you need to visualize the data in your IDE, just configure this database params:
 * HOST: localhost
 * PORT: 8891
 * USER: root
 * PASS: root
 
-### Test
+## Test
 
 If you want to run the app test, run:
 
@@ -58,7 +58,8 @@ If you want to run the app test, run:
 $ docker-compose exec api pytest
 ```
 
-#### Troubleshotting
+
+## Troubleshotting
 
 ### Limited base free plan on Fixer.io service
 For the free plan only accepts the "EUR" base in the request, due to this issue we calculated the USD fix value against the MXN value of the EUR base(MXN EUR fix value / USD EUR fix value).
