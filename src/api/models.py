@@ -1,4 +1,4 @@
-from peewee import Model, UUIDField, CharField, TextField, IntegerField, TimestampField, DecimalField
+from peewee import Model, UUIDField, CharField, TextField, IntegerField, DecimalField, DateTimeField
 from orm.peewee import OrmEngine
 
 
@@ -19,7 +19,7 @@ class ExchangeRate(Model):
     user_id = UUIDField(index=True)
     exchange_provider = CharField(max_length=50)
     exchange_rate = DecimalField()
-    last_update = TimestampField()
+    last_update = DateTimeField()
 
     class Meta:
         database = OrmEngine().get_engine()

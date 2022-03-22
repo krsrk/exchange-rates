@@ -31,5 +31,12 @@ class JwtCreator:
             algorithm=self.algo
         )
 
+    def decodeToken(self, token):
+        try:
+            return jwt.decode(token, key=self.secret, algorithms=[self.algo, ])
+        except Exception as e:
+            print(str(e))
+            return None
+
     def isAlgoSupported(self):
         return self.algo in self.supported_algos

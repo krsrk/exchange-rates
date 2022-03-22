@@ -3,10 +3,13 @@ import json
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
+from exceptions.auth import AuthTokenNotFoundException, InvalidAuthBearerTokenException, InvalidSignedTokenException, \
+    InvalidUserException
 from jwt_gen.jwtcreator import JwtCreator
 from orm.peewee import OrmEngine
 from models import User, ExchangeRate
-from repositories import UserRepository
+from repositories import UserRepository, ExchangeRateRepository
+from services.service_provider import ServiceRatesProvider
 
 app = FastAPI()
 app.add_middleware(
@@ -64,3 +67,23 @@ async def auth_login(request: Request):
 
     return {"token": token}
 
+
+@app.put("/exchange/rates")
+async def get_exchange_rates(request: Request):
+    # Validations
+    AuthTokenNotFoundException(request.headers)
+    InvalidAuthBearerTokenException(request.headers['authorization'])
+    token = request.headers['authorization'].split()
+    decode_token = JwtCreator().decodeToken(token[1])
+    InvalidSignedTokenException(decode_token)
+    auth_user = UserRepository().auth(decode_token['user_name'], decode_token['password'])
+    InvalidUserException(auth_user)
+
+    fixer_data = [
+        ServiceRatesProvider('fixer').dispatch().get_exchange_rates(),
+        ServiceRatesProvider('banxico').dispatch().get_exchange_rates(),
+        ServiceRatesProvider('dof').dispatch().get_exchange_rates()
+    ]
+    response_data = ExchangeRateRepository().upsert(user_id=str(auth_user['id']), fix_data=fixer_data)
+
+    return response_data

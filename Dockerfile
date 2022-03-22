@@ -13,6 +13,7 @@ RUN pip install uvicorn[standar]
 RUN pip install peewee
 RUN pip install pytest
 RUN pip install pyjwt[crypto]
+RUN pip install beautifulsoup4
 
 #mysqlclient installation
 RUN apk update \
