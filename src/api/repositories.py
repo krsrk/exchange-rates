@@ -7,6 +7,19 @@ from models import User, ExchangeRate
 class UserRepository:
     model = User
 
+    def create(self, user, password):
+        try:
+            created_user = self.model.create(
+                id=str(uuid.uuid4()),
+                username=user,
+                password=password,
+                request_limit=10
+            )
+            return created_user
+        except Exception as e:
+            print(str(e))
+            return None
+
     def auth(self, user_name, password):
         try:
             return self.model.select().where(

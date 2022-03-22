@@ -48,6 +48,20 @@ async def auth():
     return {"message": "Auth Service"}
 
 
+@app.post("/auth/register")
+async def register(request: Request):
+    body = await request.json()
+    user_name = body['username']
+    password = body['password']
+
+    created_user = UserRepository().create(user_name, password)
+
+    if not created_user:
+        raise HTTPException(status_code=500, detail="Created user failed!")
+
+    return {"message": "User created satisfactory!"}
+
+
 @app.post("/auth/login")
 async def auth_login(request: Request):
     body = await request.json()
@@ -61,8 +75,7 @@ async def auth_login(request: Request):
     token = JwtCreator(payload={
         'id': str(user_payload['id']),
         'user_name': user_payload['username'],
-        'password': user_payload['password'],
-        'request_limit': user_payload['request_limit']
+        'password': user_payload['password']
     }).createToken()
 
     return {"token": token}
