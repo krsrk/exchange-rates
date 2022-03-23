@@ -50,13 +50,38 @@ If you need to visualize the data in your IDE, just configure this database para
 * USER: root
 * PASS: root
 
-## Test
+## Test Endpoints
 
 If you want to run the app test, run:
 
 ```bash
 $ docker-compose exec api pytest
 ```
+## Workflow
+
+- You must deploy your local environment to manual test the endpoints.
+- We recomend software like: Insomnia or Postman; to test the endpoints.
+
+1.- Register a user
+
+```bash
+http://localhost:8889/auth/register
+```
+2.- Login
+
+```bash
+http://localhost:8889/auth/login
+```
+3.- Copy the token from the Login request
+
+4.- Configure the request with Header: Authroization - Bearer Token; paste the token in the value of the Bearer.
+
+5.- Send the request:
+
+```bash
+http://localhost:8889/exchange/rates
+```
+
 
 
 ## Troubleshotting
