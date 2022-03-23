@@ -66,11 +66,27 @@ $ docker-compose exec api pytest
 
 ```bash
 http://localhost:8889/auth/register
+
+Body JSON:
+{
+  username: "myusername",
+  password: "mypass"
+}
+
+Method: POST
 ```
 2.- Login
 
 ```bash
 http://localhost:8889/auth/login
+
+Body JSON:
+{
+  username: "myusername",
+  password: "mypass"
+}
+
+Method: POST
 ```
 3.- Copy the token from the Login request
 
@@ -80,6 +96,11 @@ http://localhost:8889/auth/login
 
 ```bash
 http://localhost:8889/exchange/rates
+
+Header authorization:
+Bearer [login token]
+
+Method: PUT
 ```
 
 
