@@ -20,13 +20,20 @@ $ git clone https://github.com/krsrk/exchange-rates.git
 $ cd exchange-rates
 ``` 
 
-3.- Build services images:
+3.- Make the database dir:
+
+```bash
+$ mkdir data && cd data && mkdir mariadb
+```
+
+
+4.- Build services images:
 
 ```bash
 $ docker-compose build
 ``` 
 
-4.- Deploy the services:
+5.- Deploy the services:
 
 ```bash
 $ docker-compose up -d
@@ -35,7 +42,7 @@ $ docker-compose up -d
 
 ## Backend
 
-5.- Deploying the web server:
+6.- Deploying the web server:
 
 ```bash
 $ docker-compose exec api uvicorn main:app --reload --port 8889 --host 0.0.0.0
