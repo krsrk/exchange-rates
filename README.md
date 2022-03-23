@@ -50,9 +50,9 @@ If you need to visualize the data in your IDE, just configure this database para
 * USER: root
 * PASS: root
 
-## Test Endpoints
+## Testing(Unit Test)
 
-If you want to run the app test, run:
+If you want to run the app tests, run:
 
 ```bash
 $ docker-compose exec api pytest
